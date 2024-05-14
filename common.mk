@@ -97,6 +97,7 @@ PRODUCT_PACKAGES += \
     libcamera2ndk_vendor \
     libgrallocusage.vendor \
     libgui_vendor \
+    libmeminfo.vendor \
     vendor.qti.hardware.camera.aon@1.3.vendor \
     vendor.qti.hardware.camera.postproc@1.0.vendor
 
@@ -141,10 +142,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
+
+# Doze
+PRODUCT_PACKAGES += \
+    SamsungDoze
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.3.vendor \
     android.hardware.drm-service.clearkey
+
+# eUICC
+PRODUCT_PACKAGES += OpenEUICC
 
 # Fastboot
 PRODUCT_PACKAGES += \
@@ -236,7 +245,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.1.vendor \
     libkeymaster_messages.vendor \
-    libkeymaster4_1support.vendor
+    libkeymaster4_1support.vendor \
+    libkeymaster_portable.vendor
 
 # Keymint
 PRODUCT_PACKAGES += \
@@ -245,7 +255,8 @@ PRODUCT_PACKAGES += \
     android.hardware.security.keymint-V2-ndk.vendor \
     android.hardware.security.rkp-V3-ndk.vendor \
     android.hardware.security.secureclock-V1-ndk.vendor \
-    android.hardware.security.sharedsecret-V1-ndk.vendor
+    android.hardware.security.sharedsecret-V1-ndk.vendor \
+    libpuresoftkeymasterdevice.vendor
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
@@ -320,6 +331,10 @@ PRODUCT_PACKAGES += \
     libstagefrighthw
 
 # Overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-lineage
+
+# Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
 PRODUCT_PACKAGES += \
@@ -337,12 +352,9 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service-qti \
+    android.hardware.power-V2-ndk_platform.vendor \
     android.hardware.power@1.2.vendor \
     vendor.qti.hardware.perf@2.3.vendor
-
-PRODUCT_COPY_FILES += \
-    vendor/qcom/opensource/power/config/kalama/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
 
 # Protobuf
 PRODUCT_PACKAGES += \
@@ -385,6 +397,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ril/sehradiomanager.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sehradiomanager.conf
 
+# Recovery
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/init/init.recovery.qcom.rc:root/init.recovery.qcom.rc
+
 # Sensors
 PRODUCT_PACKAGES += \
     android.frameworks.sensorservice@1.0.vendor \
@@ -408,6 +424,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepcounter.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepdetector.xml
 
+# Shims
+PRODUCT_PACKAGES += \
+    libshim_sensorndkbridge
+
 # Shipping API
 BOARD_API_LEVEL := 33
 BOARD_SHIPPING_API_LEVEL := $(BOARD_API_LEVEL)
@@ -428,6 +448,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/vendor.samsung.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.telephony.mbms.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.mbms.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/privapp-permissions-phhims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-phhims.xml
 
 # Thermal
 PRODUCT_PACKAGES += \
